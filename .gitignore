@@ -1,0 +1,8 @@
+# Ignore node_modules in all folders
+backend/node_modules/
+frontend/node_modules/
+dashboard/node_modules/
+
+# Common ignores
+node_modules/
+.env
