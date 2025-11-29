@@ -7,7 +7,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 const { HoldingsModel } = require("./model/HoldingsModel");
-const {UserModel} = require("./model/UsersModel");
+const {UserModel} = require("./model/UserModel");
 
 const { PositionsModel } = require("./model/PositionsModel");
 const { OrdersModel } = require("./model/OrdersModel");
@@ -20,9 +20,11 @@ const uri = process.env.MONGO_URL;
 
 const app = express();
 
-const allowedOrigins = ["http://localhost:3001", "http://localhost:3000"];
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  credentials: true 
+}));
 
-app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
@@ -197,12 +199,12 @@ app.use("/user", userSchemas);
 //   res.send("Done!");
 // });
 
-app.get("/allHoldings", async (req, res) => {
+app.get("/holdings", async (req, res) => {
   let allHoldings = await HoldingsModel.find({});
   res.json(allHoldings);
 });
 
-app.get("/allPositions", async (req, res) => {
+app.get("/positions", async (req, res) => {
   let allPositions = await PositionsModel.find({});
   res.json(allPositions);
 });
@@ -232,8 +234,15 @@ app.post("/newOrder", async (req, res) => {
   res.send("Order saved!");
 });
 
+mongoose.connect(uri)
+  .then(() => {
+    console.log("DB started!");
+
 app.listen(PORT, () => {
-  console.log("App started!");
-  mongoose.connect(uri);
-  console.log("DB started!");
-});
+        console.log("App started! Server running on port " + PORT);
+    });
+
+  })
+  .catch(err => {
+    console.error("DB Connection Error:", err);
+  });

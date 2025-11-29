@@ -14,7 +14,7 @@ export default function LoginPage() {
         { withCredentials: true }
       );
       alert("Login successful!");
-      window.location.href = "/dashboard"; // redirect after login
+      window.location.href = "http://localhost:3001/dashboard"; // redirect after login
     } catch (err) {
       alert(err.response?.data?.message || "Login failed");
     }

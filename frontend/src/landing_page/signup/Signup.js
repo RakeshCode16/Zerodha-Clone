@@ -10,7 +10,7 @@ export default function SignupPage() {
     e.preventDefault();
     try {
       await axios.post(
-        "http://localhost:3000/user/signup",
+        "http://localhost:3002/user/signup", 
         { email, username, password },
         { withCredentials: true }
       );
