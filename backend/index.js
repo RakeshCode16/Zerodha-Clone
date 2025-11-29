@@ -4,14 +4,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 const { HoldingsModel } = require("./model/HoldingsModel");
+const {UserModel} = require("./model/UsersModel");
 
 const { PositionsModel } = require("./model/PositionsModel");
 const { OrdersModel } = require("./model/OrdersModel");
 
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
+const userSchemas = require("./schemas/userSchema");
 
 
 const PORT = process.env.PORT || 3002;
@@ -19,11 +20,13 @@ const uri = process.env.MONGO_URL;
 
 const app = express();
 
-app.use(cors());
+const allowedOrigins = ["http://localhost:3001", "http://localhost:3000"];
+
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
-
-
+app.use("/user", userSchemas);
 
 // app.get("/addHoldings", async (req, res) => {
 //   let tempHoldings = [
@@ -205,15 +208,27 @@ app.get("/allPositions", async (req, res) => {
 });
 
 app.post("/newOrder", async (req, res) => {
-  let newOrder = new OrdersModel({
-    name: req.body.name,
-    qty: req.body.qty,
-    price: req.body.price,
-    mode: req.body.mode,
-  });
+  let newOrder = [
+    {
+      "name": "TCS",
+      "qty": 5,
+      "price": 3500.00,
+      "mode": "CNC" 
+}
+  ];
+
+  tempOrders.forEach((item) => {
+    let newOrder = new OrdersModel({
+      name: item.name,
+      qty: item.qty,
+      price: item.price,
+      mode: item.mode,
+      
+    });
+
 
   newOrder.save();
-
+  });
   res.send("Order saved!");
 });
 

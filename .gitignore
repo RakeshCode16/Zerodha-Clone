@@ -5,4 +5,4 @@ dashboard/node_modules/
 
 # Common ignores
 node_modules/
-.env
+backend/.env
