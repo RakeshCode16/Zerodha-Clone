@@ -16,8 +16,11 @@ Authentication: JWT, bcryptjs
  Local Setup & Ports
 You will need three separate terminals to run the project.
 Service,Location,Port
+
 Frontend,/frontend,localhost:3000
+
 Dashboard,/dashboard,localhost:3001
+
 Backend/API,/backend,localhost:3002
 
 Setup Instructions
