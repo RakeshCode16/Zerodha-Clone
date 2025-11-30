@@ -9,12 +9,12 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       await axios.post(
-       "http://localhost:3002/user/login",
+       "https://zerodha-clone-qetz.onrender.com/user/login",
         { email, password },
         { withCredentials: true }
       );
       alert("Login successful!");
-      window.location.href = "http://localhost:3001/dashboard"; // redirect after login
+      window.location.href = "https://zerodha-clone-6fqx.vercel.app/dashboard"; 
     } catch (err) {
       alert(err.response?.data?.message || "Login failed");
     }
