@@ -1,4 +1,5 @@
 Zerodha Clone - Trading Dashboard
+
 This is a full-stack application that is a clone of the Zerodha trading dashboard, built using the MERN stack. The project is divided into three independent services.
 
  Tech Stack
