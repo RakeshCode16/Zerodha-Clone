@@ -21,7 +21,7 @@ const uri = process.env.MONGO_URL;
 const app = express();
 
 app.use(cors({
-  origin: ['https://zerodha-clone-green-nu.vercel.app/', 'https://zerodha-clone-6fqx.vercel.app/'],
+  origin: ['https://zerodha-clone-green-nu.vercel.app', 'https://zerodha-clone-6fqx.vercel.app'],
   credentials: true 
 }));
 
@@ -210,28 +210,22 @@ app.get("/positions", async (req, res) => {
 });
 
 app.post("/newOrder", async (req, res) => {
-  let newOrder = [
-    {
-      "name": "TCS",
-      "qty": 5,
-      "price": 3500.00,
-      "mode": "CNC" 
-}
-  ];
-
-  tempOrders.forEach((item) => {
-    let newOrder = new OrdersModel({
-      name: item.name,
-      qty: item.qty,
-      price: item.price,
-      mode: item.mode,
-      
-    });
-
-
-  newOrder.save();
+  try {
+  let newOrder = new OrdersModel({
+    name: req.body.name,
+    qty: req.body.qty,
+    price: req.body.price,
+    mode: req.body.mode,
   });
-  res.send("Order saved!");
+
+  await newOrder.save();
+
+  res.status(200).send("Order saved successfully !");
+
+  } catch (error) {
+    console.error("New Order Save Error:", error);
+    res.status(500).send("Failed to save order.");
+  }
 });
 
 mongoose.connect(uri)
